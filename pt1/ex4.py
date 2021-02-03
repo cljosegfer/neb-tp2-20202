@@ -15,11 +15,15 @@ x = np.linspace(start = li, stop = ls, num = n)
 young = gaussian(x = x, mu = 0, sigma = 20)
 old = gaussian(x = x, mu = 100, sigma = 30)
 vyoung = np.power(young, 2)
-vold = np.power(old, 0.5)
+vold = np.power(old, 2)
 
 a = np.minimum(1 - vyoung, 1 - vold)
 b = np.minimum(vyoung, vold)
 
 plt.plot(x, a)
 plt.plot(x, b)
+plt.show()
+
+plt.plot(x, vyoung)
+plt.plot(x, vold)
 plt.show()
