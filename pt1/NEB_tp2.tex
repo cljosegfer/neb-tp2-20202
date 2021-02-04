@@ -67,6 +67,42 @@ L =
 
 \hfill
 
+
+\hspace{1cm}
+
+\[
+M = Q \wedge \neg L = 
+\begin{vmatrix}
+m_{11} & m_{12} & m_{13} & m_{14} \\
+m_{21} & m_{22} & m_{23} & m_{24} \\
+\end{vmatrix}
+\]
+
+\hspace{1cm}
+
+em que $m_{ij} = min(Q_{ij}, 1 - L_{ij})$
+
+\hspace{1cm}
+
+$m_{11} = min(0, 0) = 0$
+
+$m_{12} = min(0.8, 0.8) = 0.8$
+
+$m_{13} = min(0.6, 0.4) = 0.4$
+
+$m_{14} = min(0.25, 0.2) = 0.2$
+
+\hspace{1cm}
+
+$m_{21} = min(0.7, 0.15) = 0.15$
+
+$m_{22} = min(0.98, 0.7) = 0.7$
+
+$m_{23} = min(0.15, 0.2) = 0.15$
+
+$m_{24} = min(0.5, 0.12) = 0.12$
+
+
 \[
 M = Q \wedge \neg L = 
 \begin{vmatrix}
@@ -74,6 +110,71 @@ M = Q \wedge \neg L =
 0.15 & 0.7 & 0.15 & 0.12 \\
 \end{vmatrix}
 \]
+
+
+\hspace{1cm} 
+
+
+\[
+P = Q \circ R = 
+\begin{vmatrix}
+p_{11} & p_{12} & p_{13} \\
+p_{21} & p_{22} & p_{23} \\
+\end{vmatrix}
+\]
+
+\hspace{1cm}
+
+em que $p_{ij} = max(Q_{i,*} * R_{*, j})$ com a
+operação $*$ representando multiplicação par a par.
+
+\hspace{1cm}
+
+$p_{11} = max((1, 0.1, 0.4, 0.85) * (0, 0.8, 0.6, 0.25))$
+
+$p_{11} = max(0, 0.081, 0.24, 0.2125)$
+
+$p_{11} = 0.24$
+
+\hspace{.5cm}
+
+$p_{12} = max((0.4, 0.4, 0.15, 0.3) * (0, 0.8, 0.6, 0.25))$
+
+$p_{12} = max(0, 0.32, 0.09, 0.075)$
+
+$p_{12} = 0.32$
+
+\hspace{.5cm}
+
+$p_{13} = max((0.2, 0.7, 0.05, 0.1) * (0, 0.8, 0.6, 0.25))$
+
+$p_{13} = max(0, 0.56, 0.03, 0.025)$
+
+$p_{13} = 0.56$
+
+\hspace{.5cm}
+
+$p_{21} = max((0.1, 0.1, 0.4, 0.85) * (0.7, 0.98, 0.15, 0.5)$
+
+$p_{21} = max(0.7, 0.098, 0.06, 0.425)$
+
+$p_{21} = 0.7$
+
+\hspace{.5cm}
+
+$p_{22} = max((0.4, 0.4, 0.15 0.3) * (0.7, 0.98, 0.15, 0.5)$
+
+$p_{22} = max(0.28, 0.392, 0.0225, 0.15)$
+
+$p_{22} = 0.392$
+
+\hspace{.5cm}
+
+$p_{23} = max((0.2, 0.7, 0.05, 0.1) * (0.7, 0.98, 0.15, 0.5)$
+
+$p_{23} = max(0.14, 0.686, 0.0075, 0.05)$
+
+$p_{23} = 0.686$
 
 \[
 P = Q \circ R = 
@@ -104,6 +205,40 @@ R =
 \]
 
 \hfill
+\[
+B = A \circ R = 
+\begin{vmatrix}
+b1 & b2 & b3 & b4 \\
+\end{vmatrix}
+\]
+
+em que $b_{i} = max(min(A_{i}, R_{*, i}))$
+
+\hspace{.5cm}
+
+$b_1 = max(min((1, 0.5, 0.4, 0.2), (1, 0.8, 0, 0))$
+
+$b_1 = max(1, 0.5, 0, 0)  = 1 $
+
+\hspace{.5cm}
+ 
+$b_2 = max(min((1, 0.5, 0.4, 0.2), (0.8, 1, 0.8, 0))$
+
+$b_2 = max(0.8, 0.5, 0.4, 0) = 0.8$ 
+
+\hspace{.5cm}
+
+$b_3 = max(min((1, 0.5, 0.4, 0.2), (0, 0.8, 1, 0.8))$
+
+$b_3 = max(0, 0.5, 0.4, 0.2) = 0.5$
+
+\hspace{.5cm}
+
+$b_4 = max(min((1, 0.5, 0.4, 0.2), (0, 0, 0.8, 1))$
+
+$b_4 = max(0, 0, 0.4, 0.2) = 0.4$
+
+\hspace{1cm}
 
 \[
 B = A \circ R = 
@@ -185,11 +320,66 @@ A' =
 
 \hfill
 
+%solucao por w
+
 \[
-B' = A' \circ (\underset{i}{\cup} A_i \rightarrow B_i) =
+\mu_{B'} = \underset{i}{\vee} [\vee (\mu_{A'} \wedge \mu_{A_i}) \wedge \mu_{B_i}]
+\]
+
+\[i = 1\]
+
+\[
+\mu_{B'_1} = \vee (\mu_{A'} \wedge \mu_{A_1}) \wedge \mu_{B_1} = \omega_1 \wedge \mu_{B_1}
+\]
+
+%min(0, 0.2), min(1, 0.4) e min(0, 0.5)
+%aqui acho q o correto seria mu = 0/x1 + 0.4/x2 + 0/x3, mas essa anotaçao é mais chata(?)
+\[
+\mu_{B'_1} = \vee (
 \begin{vmatrix}
-b_1 & b_2 \\
+0 & 0.4 & 0 \\
 \end{vmatrix}
+) \wedge \mu_{B_1} = 0.4 \wedge \mu_{B_1}
+\]
+
+%min(0.4, 0.1) e min(0.4, 0.3)
+\[
+\mu_{B'_1} = 
+\begin{vmatrix}
+0.1 & 0.3 \\
+\end{vmatrix}
+\]
+
+
+\[i = 2\]
+
+\[
+\mu_{B'_2} = \vee (\mu_{A'} \wedge \mu_{A_2}) \wedge \mu_{B_2} = \omega_2 \wedge \mu_{B_2}
+\]
+
+%min(0, 1), min(1, 1) e min(0, 0.3)
+\[
+\mu_{B'_2} = \vee (
+\begin{vmatrix}
+0 & 1 & 0 \\
+\end{vmatrix}
+) \wedge \mu_{B_1} = 1 \wedge \mu_{B_2}
+\]
+
+%min(1, 0.6) e min(1, 0.2)
+\[
+\mu_{B'_1} = 
+\begin{vmatrix}
+0.6 & 0.2 \\
+\end{vmatrix}
+\]
+
+\[
+\mu_{B'} = \mu_{B'_1} \vee \mu_{B'_2} = 
+\begin{vmatrix}
+0.6 & 0.3 \\
+\end{vmatrix}
+= 0.6/y_1 + 0.3/y_2
 \]
 
 \hfill
@@ -242,7 +432,8 @@ b_1 & b_2 \\
 \mu_{C'} = \underset{i}{\vee} [\vee (\mu_{A'} \wedge \mu_{A_i}) \wedge \mu_{C_i}]
 \]
 
-\begin{figure}[t!]
+%\begin{figure}[t!] eu coloquei a figura no topo pq antes só tinha ela na coluna, ai ficava no meio do espaço em branco
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=\w\linewidth]{fig/plot06.png}
 \caption{Curvas de pertinência de $C'$.}
