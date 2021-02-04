@@ -1,5 +1,5 @@
 import numpy as np
-from op import tnormT, snorm, composition
+from op import tnormT, snorm, tnorm
 
 #antcd
 A1 = np.array([0.2, 0.4, 0.5]).reshape(1, -1)
@@ -12,12 +12,9 @@ B2 = np.array([0.6, 0.2]).reshape(1, -1)
 #fato
 Alinha = np.array([0, 1, 0]).reshape(1, -1)
 
-#relation
-R1 = tnormT(A1, B1)
-R2 = tnormT(A2, B2)
-
-# Blinha1 = composition(Alinha, R1)
-# Blinha2 = composition(Alinha, R2)
+#w
+w1 = np.amax(tnorm(Alinha, A1))
+w2 = np.amax(tnorm(Alinha, A2))
 
 #inferencia
-Blinha = snorm(composition(Alinha, R1), composition(Alinha, R2))
+Blinha = snorm(tnormT(w1, B1), tnormT(w2, B2))

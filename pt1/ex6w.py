@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from pertinencia import trapmf, trimf
-from op import tnormT, snorm, composition
+from op import tnormT, snorm, tnorm
 
 #espaco
 start = 2
@@ -20,12 +20,12 @@ C2 = trimf(x = x, a = 4, b = 5, c = 6).reshape(1, -1)
 #fato
 Alinha = trimf(x = x, a = 5, b = 6, c = 7).reshape(1, -1)
 
-#relation
-R1 = tnormT(A1, C1)
-R2 = tnormT(A2, C2)
+#w
+w1 = np.amax(tnorm(Alinha, A1))
+w2 = np.amax(tnorm(Alinha, A2))
 
 #inferencia
-Clinha = snorm(composition(Alinha, R1), composition(Alinha, R2))
+Clinha = snorm(tnormT(w1, C1), tnormT(w2, C2))
 
 #plot
 plt.plot(x, np.squeeze(Clinha))
