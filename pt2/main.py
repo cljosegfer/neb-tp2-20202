@@ -18,10 +18,15 @@ class Linear:
     def infer(self, x):
         return x*self.m + self.b
 
-    def plot(self, b=0, e=1, show=False, c="red"):
+    def plot(self, b=0, e=1, show=False, c="red", legend=None):
         x = np.linspace(b, e, 500)
         y = [self.infer(_x) for _x in x]
+
+        if legend is not None:
+            plt.plot(x, y, c=c, label=legend)
+
         plt.plot(x, y, c=c)
+
         if show:
             plt.show()
 
@@ -57,7 +62,7 @@ con = [l1, l2, l3]
 
 l1.plot(-p/2, 0)
 l2.plot(0, p)
-l3.plot(p, 3*p/2)
+l3.plot(p, 3*p/2, legend="Consequentes")
 
 # Criando antecedentes
 
@@ -68,17 +73,20 @@ t3 = Trimf(p/2, 3*p/2, 4*p/2)
 ant = [t1, t2, t3]
 
 t1.plot(-p/2, p/2, c="blue")
-t2.plot(-p/2, 3*p/2, c="blue") t3.plot(p/2, 3*p/2, c="blue")
+t2.plot(-p/2, 3*p/2, c="blue")
+t3.plot(p/2, 3*p/2, c="blue", legend="Antecedentes")
 
 # inferindo
 
-sugeno = Sugeno(con, ant)
+sugeno = Sugeno(ant, con)
 
 x = np.linspace(-p/2, 3*p/2)
 y = [np.cos(_x) for _x in x]
 y_hat = [sugeno.infer(_x) for _x in x]
 
-plt.plot(x, y, c="black")
-plt.plot(x, y_hat,"--", c="black")
+plt.plot(x, y, c="black", label="Função aproximada")
+plt.plot(x, y_hat,"--", c="black", label="Aproximação")
 
+plt.legend()
 plt.show()
+
