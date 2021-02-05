@@ -2,17 +2,20 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 class Sugeno():
-    def __init__(consequents, antecedents):
+
+    def __init__(self, consequents, antecedents):
         assert(len(consequents) == len(antecedents))
         self.consequents = consequents
-        self.antedecents = antecedents
+        self.antecedents = antecedents
 
-    def infer(x):
-        weights = [ant(x) for ant in self.antecedent]
-        consequent_memberships = [con(x) for cor in self.consequents]
+    def infer(self, x):
+        weights = [ant.infer(x) for ant in self.antecedents]
+        consequent_values = [con.infer(x) for con in self.consequents]
 
         output = 0
-        for (w, cm) in zip(weights, consequent_memberships):
+        for (w, cm) in zip(weights, consequent_values):
             output += w*cm
 
         normal_output = output/sum(weights)
+
+        return normal_output
