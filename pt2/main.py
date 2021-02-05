@@ -82,11 +82,16 @@ sugeno = Sugeno(ant, con)
 
 x = np.linspace(-p/2, 3*p/2)
 y = [np.cos(_x) for _x in x]
-y_hat = [sugeno.infer(_x) for _x in x]
+y_hat = np.array([sugeno.infer(_x) for _x in x])
 
 plt.plot(x, y, c="black", label="Função aproximada")
 plt.plot(x, y_hat,"--", c="black", label="Aproximação")
 
+# calculando erro
+
+mse = np.sum((y - y_hat) ** 2)
+
+plt.plot([], label = f"Erro: {mse:.3f}", c="white")
+
 plt.legend()
 plt.show()
-
