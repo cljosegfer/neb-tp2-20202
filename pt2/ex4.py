@@ -1,63 +1,38 @@
 import numpy as np
-from scipy.special import logit
+from pertinencia import trimf, gaussmf
 from sugeno import Sugeno
 import matplotlib.pyplot as plt
 
-def gorjeta(x):
-    #logistic-1 melhor funcao? logit = c + k * ln(x / ( 1 - x ) )
-    k = 0.025
-    c = 0.15
-    return c + k * logit(x)
+# x: food / service, y : tip, eh pra usar uma variavel so??
+x = np.linspace(start = 0, stop = 1, num = 1000)
 
-# def algumadistribuicao(centro, par):
-#     #gauss, tri, trap
-#     return mf
-
-def derivada(x):
-    k = 0.025
-    return - k / x / (x - 1)
-
-def linear(x, p, q):
-    return p * x + q
-
-#geracao
-start = 0.01
-stop = 0.99
-num = 1000
-x = np.linspace(start, stop, num)
-y = gorjeta(x)
-plt.plot(x, y)
-
-#antecedentes, n = 3
-mu = [start, (start + stop) / 2, stop]
-# par = ['sd1', 'lim2', 'lim3']
-# ant = algumadistribuicao(mu, par)
+#antecedentes
+lim = 0.35      #ajuste manual
+# ruim = trimf(x = x, a = 0 - lim, b = 0, c = 0 + lim)
+ruim = gaussmf(x = x, c = 0, sigma = lim)
+# bom = trimf(x = x, a = 0.5 - lim, b = 0.5, c = 0.5 + lim)
+bom = gaussmf(x = x, c = 0.5, sigma = lim)
+# excelente = trimf(x = x, a = 1 - lim, b = 1, c = 1 + lim)
+excelente = gaussmf(x = x, c = 1, sigma = lim)
 
 #consequentes
-p = [derivada(mu[0]),
-     derivada(mu[1]),
-     derivada(mu[2])]
-q = [gorjeta(mu[0]) - p[0] * mu[0],
-     gorjeta(mu[1]) - p[1] * mu[1],
-     gorjeta(mu[2]) - p[2] * mu[2]]
-con = list()
-for i in range(len(p)):
-    consq = linear(x, p[i], q[i]).reshape(-1, 1)
-    con.append(consq)
+p1 = (0.15 - 0.05) / 0.25
+q1 = 0.05
+y1 = p1 * x + q1
 
-#retas
-# plt.plot(x, con[0])
-plt.plot(x, con[1])
-# plt.plot(x, con[2])
+p2 = 0
+q2 = 0.15
+y2 = p2 * x + q2
+
+p3 = (0.25 - 0.15) / 0.25
+q3 = - 0.15
+y3 = p3 * x + q3
 
 #sugeno
-# model = Sugeno(ant, con)
+ant = list([ruim, bom, excelente])
+con = list([y1, y2, y3])
 
-#erro
-# yhat = Sugeno.infer(x)
-# erro = y - yhat
-# mse = np.sum(erro ** 2)
+model = Sugeno(consequents = con, antecedents = ant)
+yhat = model.infer(x)
 
-#plot
-# plt.plot(x, yhat)
-plt.show()
+plt.plot(x, yhat)

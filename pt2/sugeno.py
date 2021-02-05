@@ -3,7 +3,8 @@ from matplotlib import pyplot as plt
 
 class Sugeno():
 
-    def __init__(self, consequents, antecedents):
+    def __init__(self, antecedents, consequents):
+        #fiquei incomodado tmb quando percebi
         assert(len(consequents) == len(antecedents))
         self.consequents = consequents
         self.antecedents = antecedents
