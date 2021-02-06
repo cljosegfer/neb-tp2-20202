@@ -65,22 +65,33 @@ tri = False
 
 # Criando consequentes: 3 regras
 
+# Define-se os pontos manualmente (ou por uma funcao como np.arange)
+# e para cada par de pontos uma reta é criada
+
 # letra a
 
 p = 3.14
 
-px = [0, p/2, 3*p/2, 2*p]
-py = [0, 1, -1, 0]
+auto_point = False
 
-l1 = Linear(compute=True, data=(px[:2], py[:2])) #consequentes de ordem 1
-l2 = Linear(compute=True, data=(px[1:3], py[1:3]))
-l3 = Linear(compute=True, data=(px[2:], py[2:]))
+if auto_point:
+    n_points = 4
+    px = np.linspace(0, 2*p, n_points)
+    py = [np.sin(x) for x in px]
+else:
+    px = [0, p/2, 3*p/2, 2*p]
+    py = [0, 1, -1, 0]
 
-con = [l1, l2, l3]
+n_consequents = len(px) - 1
+con = []
 
-l1.plot(px[0], px[1])
-l2.plot(px[1], px[2])
-l3.plot(px[2], px[3], legend="Consequentes")
+for i in range(n_consequents):
+    l = Linear(compute=True, data=(px[i:i+2], py[i:i+2])) #consequentes de ordem 1
+    con.append(l)
+
+con[0].plot(px[0], px[1])
+con[1].plot(px[1], px[2])
+con[2].plot(px[2], px[3], legend="Consequentes")
 
 # Criando antecedentes
 
@@ -124,6 +135,3 @@ plt.legend()
 plt.show()
 
 # letra b: redefine antecedentes gaussianos apenas
-
-
-
