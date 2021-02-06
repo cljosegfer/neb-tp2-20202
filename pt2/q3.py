@@ -73,7 +73,7 @@ tri = int(sys.argv[1])
 
 p = 3.14
 
-auto_point = True
+auto_point = False
 
 if auto_point:
     n_points = 10
@@ -81,7 +81,8 @@ if auto_point:
     py = [np.sin(x) for x in px]
 else:
     px = [0, p/2, 3*p/2, 2*p]
-    py = [0, 1, -1, 0]
+    px = [-p/2, 0, p, 3*p/2]
+    py = [np.cos(x) for x in px]
 
 n_consequents = len(px) - 1
 con = []
@@ -99,7 +100,7 @@ con[-1].plot(px[n_consequents - 1], px[n_consequents], legend="Consequentes")
 
 # Criando antecedentes
 
-centers = np.linspace(0, 2*p, n_consequents)
+centers = np.linspace(px[0], px[-1], n_consequents)
 
 s = (px[1] - px[0])*2
 
