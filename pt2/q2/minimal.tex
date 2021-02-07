@@ -1,20 +1,23 @@
 \documentclass{article}
 
+\usepackage{amsmath}
 \usepackage[utf8]{inputenc}
+\usepackage{graphicx}
 \usepackage[portuguese]{babel}
 
 \begin{document}
 
 \section{2}
 
-A aproximação função $seno(x)$ no intervalo $[-\pi/2, 3\pi/2\$
+A aproximação função $seno(x)$ no intervalo $[-\frac{\pi}{2}, 3 \frac{\pi}{2}]$
 realizada por meio do modelo de Sugeno usa três regras \emph{fuzzy} e portanto
-três antecedentes e consequentes. Os consequentes são lineares e os antecedentes,
-funções de pertinência triangulares, são lineares por partes. O desenvolvimento
-analítico a seguir se baseia na escolha de consequentes e antecedentes ilustrada
-na figura \ref{fig:choice}. Observa-se que é possível dividir a região de
-inferência entre $[-\pi/2, 0]$ e $[0, 3\pi/2\$ de forma que as funções de
-pertinência sejam lineares.
+três antecedentes e consequentes. Os consequentes são lineares e os
+antecedentes, funções de pertinência triangulares, são lineares por partes. O
+desenvolvimento analítico a seguir se baseia na escolha de consequentes e
+antecedentes ilustrada na figura \ref{fig:choice}. Observa-se que é possível
+dividir a região de inferência entre $[\frac{\pi}{2}, \frac{\pi}{2}]$ e
+$[\frac{\pi}{2}, 3 \frac{\pi}{2}]$ de forma que as funções de pertinência sejam
+lineares.
 
 \begin{figure}
     \centering
@@ -25,22 +28,40 @@ pertinência sejam lineares.
 
 \subsection{Consequentes}
 
-Definição das 3 retas consequentes
+Os consequentes foram definidos por inspeção da figura \ref{fig:choice} pelas
+seguintes retas:
+
+$y_1 = \frac{2}{\pi}x + 1$  \\
+$y_2 = \frac{-2}{\pi}x + 1$ \\
+$y_3 = \frac{2}{\pi}x - 3$ \\
 
 \subsection{Antecedentes}
 
-Definição das 4 retas antecedentes
+As retas antecedentes das regiões 1 e 2 são definidas por inspeção da figura
+~\ref{fig:choice}.
 
-\subsubsection{Região 1}
+Observa-se que os antecedentes podem ser formalmente definidos como:
 
-Na regiao 1
+\subsubsection{Região 1:$[-\frac{\pi}{2}, frac{\pi}{2}]$}
+
+$a_1(x) = \frac{-1}{\pi}x + \frac{1}{2}$ \\
+$a_2(x) = \frac{1}{\pi}x + \frac{1}{2}$\\
 
 \subsubsection{Região 2}
 
-Na regiao 2
+$a_3(x) = \frac{-1}{\pi}x + \frac{1}{2} + \pi$ \\
+$a_4(x) = \frac{1}{\pi}x  x \frac{1}{2} + \pi$ \\
 
 \subsection{Inferência}
 
-expressão analítica para inferência (por partes)
+A inferência analítica é dada por partes:
+
+\yhat(x) =
+
+\[ \begin{cases}
+    \frac{a_{1}(x)y_{1}(x) + a_{2}(x)y_{2}(x)}{a_{1}(x)+a_{2}(x)} & x \in $[\frac{-\pi}{2}, \frac{\pi}{2}]$\\
+    \frac{a_{3}(x)y_{2}(x) + a_{4}(x)y_{3}(x)}{a_{3}(x)+a_{4}(x)} & x \in $[\frac{\pi}{2}, \frac{3*\pi}{2}]$ \\
+   \end{cases}
+\]
 
 \end{document}
