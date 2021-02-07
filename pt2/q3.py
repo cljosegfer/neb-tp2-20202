@@ -58,6 +58,71 @@ class Trimf(Linear):
 
         return 0
 
+
+def create_con(px=None, py=None, n_points=None):
+
+    if px is not None: # caso onde px eh passado
+
+        pass
+
+    else:
+
+        px = np.linspace(0, 2*p, n_points)
+        py = [np.sin(x) for x in px]
+
+    n_consequents = len(px) - 1
+    con = []
+
+    for i in range(n_consequents):
+        l = Linear(compute=True, data=(px[i:i+2], py[i:i+2])) #consequentes de ordem 1
+        con.append(l)
+
+    return con, n_consequents
+
+def create_ant(px, n_cons, gs=None, tri=True):
+
+    centers = np.linspace(px[0], px[-1], n_consequents)
+
+    s = (px[1] - px[0])*2
+
+    if tri:
+
+       ant = [Trimf(c-s, c, c+s) for c in centers]
+
+    else:
+        ant = [Gaussmf(c, gs) for c in centers]
+
+    return ant, centers, s
+
+def see_inference(px, con, ant, centers, s, mse):
+
+# Plot de consequentes
+
+    for cc, cons in enumerate(con[:-1]):
+        cons.plot(px[cc], px[cc+1])
+
+    con[-1].plot(px[n_consequents - 1], px[n_consequents], legend="Consequentes")
+
+# plotta antecedentes
+# antecentedes iniciais e finais sao clippados para o dominio de interesse
+
+    first_c = centers[0]
+    last_c = centers[len(centers)-1]
+
+    ant[0].plot(first_c, first_c + s, c="blue")
+
+    ant[len(ant) - 1].plot(last_c - s, last_c, c="blue", legend="Antecedentes")
+
+    for (a, c) in zip(ant[1:n_consequents-1], centers[1:n_consequents-1]):
+        a.plot(c - s, c + s, c="blue")
+    plt.plot(x, y, c="black", label="Função aproximada")
+    plt.plot(x, y_hat,"--", c="black", label="Aproximação")
+
+    plt.plot([], label = f"Erro: {mse:.3f}", c="white")
+
+    plt.legend()
+    plt.show()
+
 # define uso de triangular ou gaussiana
 
 tri = int(sys.argv[1])
@@ -81,49 +146,13 @@ if auto_point:
     py = [np.sin(x) for x in px]
 else:
     px = [0, p/2, 3*p/2, 2*p]
-    px = [-p/2, 0, p, 3*p/2]
-    py = [np.cos(x) for x in px]
+    py = [np.sin(x) for x in px]
 
-n_consequents = len(px) - 1
-con = []
-
-for i in range(n_consequents):
-    l = Linear(compute=True, data=(px[i:i+2], py[i:i+2])) #consequentes de ordem 1
-    con.append(l)
-
-# Plot de consequentes
-
-for cc, cons in enumerate(con[:-1]):
-    cons.plot(px[cc], px[cc+1])
-
-con[-1].plot(px[n_consequents - 1], px[n_consequents], legend="Consequentes")
+con, n_consequents = create_con(px, py) # cria consequentes
 
 # Criando antecedentes
 
-centers = np.linspace(px[0], px[-1], n_consequents)
-
-s = (px[1] - px[0])*2
-
-if tri:
-
-   ant = [Trimf(c-s, c, c+s) for c in centers] # cria antecedentes
-
-else:
-    gs = 0.5
-    ant = [Gaussmf(c, gs) for c in centers]
-
-# plotta antecedentes
-# antecentedes iniciais e finais sao clippados para o dominio de interesse
-
-first_c = centers[0]
-last_c = centers[len(centers)-1]
-
-ant[0].plot(first_c, first_c + s, c="blue")
-
-ant[len(ant) - 1].plot(last_c - s, last_c, c="blue", legend="Antecedentes")
-
-for (a, c) in zip(ant[1:n_consequents-1], centers[1:n_consequents-1]):
-    a.plot(c - s, c + s, c="blue")
+ant, centers, s = create_ant(px, n_consequents, tri=tri)
 
 # inferindo
 
@@ -133,16 +162,9 @@ x = np.linspace(px[0], px[n_consequents], 500)
 y = [np.sin(_x) for _x in x]
 y_hat = np.array([sugeno.infer(_x) for _x in x])
 
-plt.plot(x, y, c="black", label="Função aproximada")
-plt.plot(x, y_hat,"--", c="black", label="Aproximação")
-
 # calculando erro
 
 mse = np.sum((y - y_hat) ** 2)
 
-plt.plot([], label = f"Erro: {mse:.3f}", c="white")
 
-plt.legend()
-plt.show()
-
-# letra b: redefine antecedentes gaussianos apenas
+see_inference(px, con, ant, centers, s, mse)
