@@ -20,3 +20,15 @@ class Sugeno():
         normal_output = output/sum(weights)
 
         return normal_output
+
+    def inferbycurve(self):
+        weights = self.antecedents
+        consequent_values = self.consequents
+
+        output = 0
+        for (w, cm) in zip(weights, consequent_values):
+            output += w*cm
+
+        normal_output = output/sum(weights)
+
+        return normal_output

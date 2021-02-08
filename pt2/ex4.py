@@ -33,6 +33,6 @@ ant = list([ruim, bom, excelente])
 con = list([y1, y2, y3])
 
 model = Sugeno(consequents = con, antecedents = ant)
-yhat = model.infer(x)
+yhat = model.inferbycurve()
 
 plt.plot(x, yhat)

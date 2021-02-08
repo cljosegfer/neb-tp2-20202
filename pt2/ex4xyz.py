@@ -55,7 +55,7 @@ ant = list([tnormT(ruim, ma),
 con = list([y1, y2, y3])
 
 model = Sugeno(consequents = con, antecedents = ant)
-yhat = model.infer(x1)      #como to aplicando antes n importa o argumento
+yhat = model.inferbycurve()    #como to aplicando antes n importa o argumento
 
 #plot
 fig = plt.figure()
